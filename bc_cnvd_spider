@@ -1,0 +1,24 @@
+from selenium.webdriver import *
+from selenium.webdriver.common.by import By
+import time
+import csv
+from selenium.webdriver.common.keys import Keys
+
+if __name__ == '__main__':
+    web = Firefox()
+    web.get("https://bc.cnvd.org.cn/loopholeList")
+    time.sleep(10)
+    last=0
+    for j in range(38):
+        element=web.find_elements(By.XPATH,'//*[@id="app"]/div[2]/div[3]/div[1]/div[2]/div/div/div[3]/table/tbody/tr/td[2]/div/a')
+        sum=0
+        for i in element:
+            sum+=1
+        print(sum)
+        f = open("e:/test.csv",'a+',newline='')
+        for i in element[::]:
+            writer = csv.writer(f)
+            writer.writerow([i.get_attribute('href')])
+        f.close()
+        print('第'+str(j+1)+'工作完成，请点击下一页')
+        time.sleep(5)
